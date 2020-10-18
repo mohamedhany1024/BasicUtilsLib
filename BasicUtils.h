@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -46,7 +47,9 @@ int binSearch(int arra[], int arrS, int target) {
         cout << "Error: binSearch() function: Only accepts sorted arrays. It seams As If Your. Array Was Not Sorted. First Element was Greater Than The Second. Program Terminated." << endl;
         return 0;
     }
+    
     while (s<e) {
+		
         mid = (s+e)/2;
         if (arra[mid] >= target) {
             e = mid;
@@ -60,6 +63,10 @@ int binSearch(int arra[], int arrS, int target) {
             return mid;
         }
     }
+   
+    if (arra[e] != target) {
+		cout << "binSearch() function: Target NotFound In Array. Execution Resumed." << endl;
+	}
     return e;
 }
 
