@@ -3,6 +3,22 @@
 
 using namespace std;
 
+//A general DFS function You can Swap out Anything in it according to your needs;
+//a frequency Vector needs to be passed to the Function in order to mark the visited nodes. and prevent cyclic behaviour
+//Also this function Uses vectors so #include <vector> is mandatory
+void dfs (vector <vector<int>>& v1, vector <bool>& visitedFreqVec, int node) {
+    //mark The Current Node as Visited
+    visitedFreqVec[node] = true;
+    //Loop Over All Children of the current node
+    for (int i=0; i < v1[node].size(); i++) {
+        int child = v1[node][i];
+        //if The current child hasn't been visited yet, Then do a DFS starting from This child
+        if (!visitedFreqVec[child]) {
+            dfs(v1, visitedFreqVec, child);
+        }
+    }
+}
+
 string input(string prompt)
 {
     string txt;
@@ -47,9 +63,9 @@ int binSearch(int arra[], int arrS, int target) {
         cout << "Error: binSearch() function: Only accepts sorted arrays. It seams As If Your. Array Was Not Sorted. First Element was Greater Than The Second. Program Terminated." << endl;
         return 0;
     }
-    
+
     while (s<e) {
-		
+
         mid = (s+e)/2;
         if (arra[mid] >= target) {
             e = mid;
@@ -63,7 +79,7 @@ int binSearch(int arra[], int arrS, int target) {
             return mid;
         }
     }
-   
+
     if (arra[e] != target) {
 		cout << "binSearch() function: Target NotFound In Array. Execution Resumed." << endl;
 	}
