@@ -19,6 +19,159 @@ void dfs (vector <vector<int>>& v1, vector <bool>& visitedFreqVec, int node) {
     }
 }
 
+// quick_power: expects base and exponent. quickly computes values of a number raised to a big power!
+
+long long quick_power(long long a, long long b) {
+	long long res = 1;
+	while (b > 0) {
+		if (b % 2 != 0) {
+			res*=a;
+		}
+
+		a*=a;
+		b/=2;
+	}
+	return res;
+}
+// quick_power_mod: accepts base, exponent and mod. quicly computes valuse of a number raised to a HUGE power, it accespts a mod paramter for comically large values
+long long quick_power_mod(long long a, long long b, long long mod) {
+	long long res = 1;
+	while (b > 0) {
+		if (b % 2 != 0) {
+			res = ((res % mod)*(a % mod) % mod);
+		}
+
+		a = ((a%mod)*(a%mod) % mod);
+		b/=2;
+	}
+	return res;
+}
+
+// fact_compute: expects a vector and an integer n, make sure your vector is big enough for the
+// number of digits of the factorial.
+// usage: computes HUGE factroials. The result is a vector with the
+// factorial represented digit by digit inside of the vector. The result is
+// represented in reverse, you will have to iterate over the vector form the bottom to the top
+// to see it correctly
+// returns: m the the no. of digits
+// of the resultant factorial
+
+int fact_compute (vector <int> &vect, int n) {
+	int m = 1;
+	int carry = 0;
+	int temp = 0;
+
+	vect[0] = 1;
+
+	for (int i=2; i<=n; i++) {
+
+		for (int j=0; j<m; j++) {
+			temp = i*vect[j];
+			if ((temp % 10)+carry <= 9) {
+				vect[j] = (temp % 10)+carry;
+				temp /= 10;
+				carry = temp;
+			} else {
+				carry+=temp;
+				vect[j] = carry % 10;
+				carry /= 10;
+			}
+		}
+
+		while (carry > 0) {
+			m++;
+			vect[m-1] = carry%10;
+			carry/=10;
+		}
+	}
+	return m;
+}
+
+//compute_fact_div: expects a vector, an integer n, and an integer str
+//usage: divides two factorials by each other the result is stored in the passed vector.
+//The result is
+// represented in reverse, you will have to iterate over the vector form the bottom to the top
+// to see it correctly
+//The factorial is represented digit by digit in the vector
+//returns: m the number of digits of the resultant factorial
+
+int compute_fact_div(vector <int> &vect, int n, int str) {
+    int temp, carry, m;
+    if (n < str) {
+    	swap(n, str);
+    }
+    vect[0] = str+1;
+    m = 1;
+    temp = 0;
+    carry = 0;
+    for (int i=str+2; i<=n; i++) {
+
+        for (int j=0; j<m; j++) {
+            temp = i*vect[j];
+            if ((temp%10)+carry <= 9) {
+                vect[j] = (temp % 10) + carry;
+                temp /= 10;
+                carry = temp;
+            } else {
+                carry+=temp;
+                vect[j] = carry % 10;
+                carry/=10;
+            }
+
+        }
+
+        while (carry > 0) {
+            m++;
+            vect[m-1] = carry % 10;
+            carry /= 10;
+        }
+    }
+    return m;
+}
+
+//compute_fact_multip: expects a vector, an integer n, and an integer c
+//usage: multiplies n! by c!. The resultant factorial is represented digit by digit The result is
+// represented in reverse, you will have to iterate over the vector form the bottom to the top
+// to see it correctly
+//inside of the vector
+//returns: m the number of digits of the resultant factorial
+
+
+int compute_fact_multip(vector <int> &vect, int n, int c) {
+    int temp, carry, m;
+    vect[0] = 1;
+    m = 1;
+    temp = 0;
+    carry = 0;
+    for (int i=2; i<=n; i++) {
+
+        for (int j=0; j<m; j++) {
+            if (i <= c) {
+                temp = (i*i)*vect[j];
+            } else {
+                temp = i*vect[j];
+            }
+            if ((temp%10)+carry <= 9) {
+                vect[j] = (temp % 10) + carry;
+                temp /= 10;
+                carry = temp;
+            } else {
+                carry+=temp;
+                vect[j] = carry % 10;
+                carry/=10;
+            }
+
+        }
+
+        while (carry > 0) {
+            m++;
+            vect[m-1] = carry % 10;
+            carry /= 10;
+        }
+    }
+    return m;
+}
+
 string input(string prompt)
 {
     string txt;
